@@ -1,0 +1,10 @@
+{
+  "name": "bezalel-workshop-2017",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.15.2",
+    "paper": "^0.11.5",
+    "socket.io": "^2.0.4"
+  }
+}
