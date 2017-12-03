@@ -71,6 +71,7 @@ function startProject () {
     
     // Bind frame event to step func
     paper.view.onFrame = function (event) {
+        smoothData();
         paper.project.step();
     }
 }
@@ -85,11 +86,11 @@ window.onload = function () {
 }
 
 
-
-
 // Remote data:
 
-var remoteValue = 0.5;
+var data = 0.5; // To be used by the students (smoothed)
+var remoteValue = 0.5; // Raw
+
 var socket = io('http://localhost:3000');
 
 socket.on('data', function (value) {
@@ -98,3 +99,7 @@ socket.on('data', function (value) {
         paper.onData(value);
     }
 });
+
+function smoothData() {
+    data += (remoteValue - data) / 2;
+}

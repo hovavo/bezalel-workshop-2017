@@ -8,7 +8,7 @@ project.setup = function () {
 }
 
 project.step = function () {
-    layer('cat').rotation = yoyo(180, remoteValue);
+    layer('cat').rotation = yoyo(180, data);
 //    console.log(layer('cat').position);
-    layer('text').position.y = remoteValue * 200 + 400;
+    layer('text').position.y = data * 200 + 400;
 }
