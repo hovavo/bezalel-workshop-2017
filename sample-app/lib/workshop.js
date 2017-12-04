@@ -86,7 +86,7 @@ function layer(name) {
 
 
 // Init and bind callbacks
-function startProject () {
+function startProject() {
     // Exec setup func
     paper.project.setup();
     
@@ -95,6 +95,14 @@ function startProject () {
         smoothData();
         paper.project.step();
     }
+    
+    // Bind mouse drag to fake remote data
+    paper.view.onMouseDrag = fakeData;
+}
+
+
+function fakeData(event) {
+    remoteValue = event.point.y / paper.view.size.height;
 }
 
 
