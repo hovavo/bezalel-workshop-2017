@@ -1,31 +1,39 @@
 
 // Paper extensions:
 
+
+
 // Driver for back and forth animations
 class Yoyo {
-    constructor(max = 1, speed = 0.5) {
-        this.max = max;
+    constructor(from = 0, to = 1, speed = 0.5) {
+        this.from = from;
+        this.to = to;
         this.speed = speed;
         this._step = 0;
     }
     
     get value() {
+        let diff = this.to - this.from;
+        let dir = (diff < 0) ? -1 : 1;
         this._step += this.speed / 10;
-        return Math.sin(this._step) * this.max * 0.5 + this.max * 0.5;
+        return this.from + Math.sin(this._step) * diff * 0.5 + diff * 0.5;
     }
 }
 
 // Driver for loop animations
 class Loop {
-    constructor(max = 1, speed = 0.5) {
-        this.max = max;
+    constructor(from = 0, to = 1, speed = 0.5) {
+        this.from = from;
+        this.to = to;
         this.speed = speed;
-        this._step = 0;
+        this._value = from;
     }
     
     get value() {
-        this._step += this.speed;
-        return this._step % this.max;
+        let diff = this.to - this.from;
+        let dir = (diff < 0) ? -1 : 1;
+        this._value = this.from + ((this._value + this.speed * dir - this.from) % diff);
+        return this._value;
     }
 }
 
@@ -79,8 +87,10 @@ function fixSVG(svg) {
 // with caching
 var layersCache = {};
 function layer(name) {
-    if (!layersCache[name])
+    if (!layersCache[name]) {
         layersCache[name] = paper.project.svg.getItem({name: name});
+        layersCache[name].origin = layersCache[name].position;
+    }
     return layersCache[name];
 }
 

@@ -1,8 +1,8 @@
 
 project.svgName = 'design.svg';
 
-var yoyo1 = new Yoyo(180);
-var loop1 = new Loop(200);
+var yoyo1 = new Yoyo(-90, 180);
+var loop1 = new Loop(100, 200);
 
 // Anything you need to do once the design was loaded
 project.setup = function () {
@@ -15,5 +15,5 @@ project.step = function () {
     layer('cat').rotation = yoyo1.value;
     
     loop1.speed = data * 20;
-    layer('text').position.y = loop1.value;
+    layer('text').position.y = layer('text').origin.y + loop1.value;
 }
