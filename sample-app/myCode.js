@@ -11,9 +11,13 @@ project.setup = function () {
 
 // Anything you need to do on every frame
 project.step = function () {
-    yoyo1.max = data * 180;
+    yoyo1.to = data * 180;
+    yoyo1.step();
     layer('cat').rotation = yoyo1.value;
     
-    loop1.speed = data * 20;
-    layer('text').position.y = layer('text').origin.y + loop1.value;
+//    loop1.speed = data * 20;
+//    loop1.step();
+//    layer('text').position.y = layer('text').origin.y + loop1.value;
+    
+    layer('text').position.y = layer('text').origin.y + interpolate(0, 100, data);
 }

@@ -1,40 +1,51 @@
 
 // Paper extensions:
 
-
-
-// Driver for back and forth animations
-class Yoyo {
-    constructor(from = 0, to = 1, speed = 0.5) {
-        this.from = from;
-        this.to = to;
-        this.speed = speed;
-        this._step = 0;
-    }
-    
-    get value() {
-        let diff = this.to - this.from;
-        let dir = (diff < 0) ? -1 : 1;
-        this._step += this.speed / 10;
-        return this.from + Math.sin(this._step) * diff * 0.5 + diff * 0.5;
-    }
-}
-
-// Driver for loop animations
-class Loop {
+// Base driver animations
+class Animation {
     constructor(from = 0, to = 1, speed = 0.5) {
         this.from = from;
         this.to = to;
         this.speed = speed;
         this._value = from;
+        this._step = 0;
+    }
+    
+    step() {
+        let diff = this.to - this.from;
+        let dir = (diff < 0) ? -1 : 1;
+        this._value = this.from + (this._value + this.speed * dir - this.from);
+        // TODO: Limit by to and from
     }
     
     get value() {
+        return this._value;
+    }
+}
+
+// Driver for back and forth animations
+class Yoyo extends Animation {
+    step() {
+        let diff = this.to - this.from;
+        let dir = (diff < 0) ? -1 : 1;
+        this._step += this.speed / 10;
+        this._value = this.from + Math.sin(this._step) * diff * 0.5 + diff * 0.5;
+    }
+}
+
+// Driver for loop animations
+class Loop extends Animation {
+    step () {
         let diff = this.to - this.from;
         let dir = (diff < 0) ? -1 : 1;
         this._value = this.from + ((this._value + this.speed * dir - this.from) % diff);
-        return this._value;
-    }
+    }    
+}
+
+
+// 0-1 Interpolation  
+function interpolate(from, to, step) {
+    return from + ((to - from) * step);
 }
 
 
@@ -52,7 +63,6 @@ function randomPoint(max) {
 }
 
 
-// TODO: value mapping function
 
 
 // Improved SVG loading 
