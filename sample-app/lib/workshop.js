@@ -52,10 +52,10 @@ function interpolate(from, to, step) {
 // TODO: Random animaiton driver (perlin noise)
 
 
+// Easy random fuctions:
 function randomNumber(max) {
     return Math.random() * max;
 }
-
 
 function randomPoint(max) {
     return new paper.Point({x: randomNumber(max),
@@ -63,14 +63,13 @@ function randomPoint(max) {
 }
 
 
-
-
 // Improved SVG loading 
-function loadSVG(path, callback) {
-    paper.project.importSVG(paper.project.svgName, function (svg) {
+function loadSVG(path) {
+    paper.project.importSVG(paper.svgName, function (svg) {
             fixSVG(svg);
-            paper.project.svg = svg;
-            callback();
+            paper.view.svg = svg;
+            if (paper.svgReady) 
+                paper.svgReady();
         });
 }   
 
@@ -78,13 +77,13 @@ function loadSVG(path, callback) {
 // Handle some paperjs glitches
 function fixSVG(svg) {
     // Fix group transform
-    var groups = svg.getItems({className: "Group"});
+    let groups = svg.getItems({className: "Group"});
     groups.forEach(function (group) {
         group.transformContent = false;
     });
     
     // Image position fix:
-    var images = svg.getItems({className: "Raster"});
+    let images = svg.getItems({className: "Raster"});
     images.forEach(function (image) {
         image.position.x /= 2;
         image.position.y /= 2;
@@ -95,10 +94,10 @@ function fixSVG(svg) {
 
 // Easy access to svg children e.g. layer('dog')
 // with caching
-var layersCache = {};
+let layersCache = {};
 function layer(name) {
     if (!layersCache[name]) {
-        layersCache[name] = paper.project.svg.getItem({name: name});
+        layersCache[name] = paper.view.svg.getItem({name: name});
         layersCache[name].origin = layersCache[name].position;
     }
     return layersCache[name];
@@ -107,42 +106,35 @@ function layer(name) {
 
 // Init and bind callbacks
 function startProject() {
-    // Exec setup func
-    paper.project.setup();
-    
-    // Bind frame event to step func
-    paper.view.onFrame = function (event) {
-        smoothData();
-        paper.project.step();
-    }
-    
     // Bind mouse drag to fake remote data
-    paper.view.onMouseDrag = fakeData;
+    paper.view.onMouseDrag = function(event) {
+        remoteValue = event.point.y / paper.view.size.height;
+    };
+    
+    // Smooth data
+    let g = new paper.Group();
+    g.onFrame = function(event) {
+        data += (remoteValue - data) / 2;
+    }
 }
 
-
-function fakeData(event) {
-    remoteValue = event.point.y / paper.view.size.height;
-}
 
 
 // Bootstraping
 window.onload = function () {
-    if (paper.project.svgName) {
-        loadSVG(paper.project.svgName, startProject);
+    if (paper.svgName) {
+        loadSVG(paper.svgName);
     }
-    else {
-        startProject();
-    }
+    startProject();
 }
 
 
 // Remote data:
 
-var data = 0.5; // To be used by the students (smoothed)
-var remoteValue = 0.5; // Raw
+let data = 0.5; // To be used by the students (smoothed)
+let remoteValue = 0.5; // Raw
 
-var socket = io('http://localhost:3000');
+let socket = io('http://localhost:3000');
 
 socket.on('data', function (value) {
     remoteValue = value;
@@ -150,7 +142,3 @@ socket.on('data', function (value) {
         paper.onData(value);
     }
 });
-
-function smoothData() {
-    data += (remoteValue - data) / 2;
-}
