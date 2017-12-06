@@ -65,11 +65,11 @@ function randomPoint(max) {
 
 // Improved SVG loading 
 function loadSVG(path) {
-    paper.project.importSVG(paper.svgName, function (svg) {
+    paper.project.importSVG(paper.project.svgName, function (svg) {
             fixSVG(svg);
             paper.view.svg = svg;
-            if (paper.svgReady) 
-                paper.svgReady();
+            if (paper.project.svgReady) 
+                paper.project.svgReady();
         });
 }   
 
@@ -119,11 +119,10 @@ function startProject() {
 }
 
 
-
 // Bootstraping
 window.onload = function () {
-    if (paper.svgName) {
-        loadSVG(paper.svgName);
+    if (paper.project.svgName) {
+        loadSVG(paper.project.svgName);
     }
     startProject();
 }

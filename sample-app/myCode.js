@@ -1,7 +1,7 @@
 
-this.svgName = 'design.svg';
+project.svgName = 'design.svg';
 
-this.svgReady = function () {
+project.svgReady = function () {
     
     var yoyo1 = new Yoyo(-90, 180);
     var loop1 = new Loop(100, 200);
