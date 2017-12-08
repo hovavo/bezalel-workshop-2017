@@ -3,9 +3,8 @@
 <svg version="1.1" id="all" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="1440px" height="900px" viewBox="0 0 1440 900" style="enable-background:new 0 0 1440 900;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;stroke:#000000;stroke-miterlimit:10;}
-	.st1{font-family:'MinionPro-Regular';}
-	.st2{font-size:101.8351px;}
+	.st0{font-family:'MinionPro-Regular';}
+	.st1{font-size:101.8351px;}
 </style>
 <g id="cat">
 	
@@ -214,8 +213,6 @@ rqZMSDxU5kUjaPFRePUa99UQybE3QiBRM38VPwayEtWNCjCBECfqjj2p/MkOCIMyXq+bp7stByp6
 FYqlR+FVS4RDeIUURwCIsH+CqifwJWpFv4nR7/wIauCGq+PNQlGpiUKYIzPIehqD8c1VUT8FwP8A
 AP8Ag07kXTs2CqrUzTD04zKt0w9Dsq/wW/gKf/g8Fx/B/RNf5Y+iqX/Dj/I1XBH/AIv/2Q==" transform="matrix(1 0 0 1 -137 -90)">
 	</image>
-	<circle class="st0" cx="113" cy="160" r="20"/>
 </g>
-<text id="text" transform="matrix(1 0 0 1 63.4922 179.3594)" class="st1 st2">Hey there</text>
-<rect x="-1" class="st0" width="114" height="160"/>
+<text id="text" transform="matrix(1 0 0 1 63.4922 179.3594)" class="st0 st1">Hey there</text>
 </svg>

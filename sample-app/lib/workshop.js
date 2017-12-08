@@ -5,7 +5,7 @@ let masterHost = 'localhost';
 
 // Paper extensions:
 
-// Base driver animations
+// Base driver for animations
 class Animation {
   constructor(from = 0, to = 1, speed = 0.5) {
     this.from = from;
@@ -19,7 +19,6 @@ class Animation {
     let diff = this.to - this.from;
     let dir = (diff < 0) ? -1 : 1;
     this._value = this.from + (this._value + this.speed * dir - this.from);
-    // TODO: Limit by to and from
   }
 
   get value() {
@@ -46,13 +45,30 @@ class Loop extends Animation {
   }
 }
 
-// 0-1 Interpolation  
-function interpolate(from, to, step) {
+
+// Expose data and data utilities:
+let data = {
+  value: 0.5,
+  mapBetween(from, to) {
+    return between(from, to, this.value);
+  },
+  isBetween(a, b) {
+    let low = Math.min(a, b);
+    let high = Math.max(a, b);
+    return (this.value >= low && this.value < high);
+  },
+  isntBetween(a, b) {
+    return !this.isBetween(1, b);
+  }
+};
+
+// 0-1 Interpolation
+function between(from, to, step) {
   return from + ((to - from) * step);
 }
 
 
-// TODO: Random animaiton driver (perlin noise)
+// TODO: Random animation driver (perlin noise)
 
 
 // Easy random fuctions:
@@ -109,15 +125,19 @@ function layer(name) {
 
 // Init and bind callbacks
 function startProject() {
-  // Bind mouse drag to fake remote data
+  // Bind vertical mouse drag to fake remote data
   paper.view.onMouseDrag = function (event) {
-    remoteValue = event.point.y / paper.view.size.height;
+    let h = paper.view.size.height;
+    let y = event.point.y;
+    let pad = .15; // Padding (in percent) from screen top and bottom
+    let val = (y - h * pad * 2) / (h - h * pad * 2) + pad;
+    remoteValue = Math.max(0, Math.min(1, val));
   };
 
   // Hotkeys
   paper.view.onKeyUp = function (event) {
     // Fullscreen
-    if(event.key == 'f') {
+    if (event.key == 'f') {
       document.documentElement.webkitRequestFullscreen();
     }
   };
@@ -125,7 +145,7 @@ function startProject() {
   // Smooth data
   let g = new paper.Group();
   g.onFrame = function (event) {
-    data += (remoteValue - data) * 0.2;
+    data.value += (remoteValue - data.value) * 0.2;
   }
 }
 
@@ -139,24 +159,30 @@ window.onload = function () {
 };
 
 
-
 // Remote data:
 
-let data = 0.5; // To be used by the students (smoothed)
 let remoteValue = 0.5; // Raw
 let socket;
+let socketOptions = {
+  reconnection: false
+}
 
 if (connect) {
   if (!isRunningOnHost())
-    socket = io(`http://${masterHost}:3000`);
+    socket = io(`http://${masterHost}:3000`, socketOptions);
   else
-    socket = io();
+    socket = io(socketOptions);
 
   socket.on('data', function (value) {
     remoteValue = value;
     if (paper.onData) {
       paper.onData(value);
     }
+  });
+
+  socket.on('connect_error', function (err) {
+    // handle server error here
+    console.log('Error connecting to server');
   });
 }
 
