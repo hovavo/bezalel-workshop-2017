@@ -114,7 +114,7 @@ function startProject() {
     // Smooth data
     let g = new paper.Group();
     g.onFrame = function(event) {
-        data += (remoteValue - data) / 2;
+        data += (remoteValue - data) * 0.2;
     }
 }
 
@@ -133,7 +133,7 @@ window.onload = function () {
 let data = 0.5; // To be used by the students (smoothed)
 let remoteValue = 0.5; // Raw
 
-let socket = io('http://localhost:3000');
+let socket = io('http://10.0.0.2:3000');
 
 socket.on('data', function (value) {
     remoteValue = value;

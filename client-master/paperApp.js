@@ -1,26 +1,52 @@
-project.currentStyle.strokeWidth = 2;
+
+
+project.currentStyle.strokeWidth = 5;
 project.currentStyle.strokeColor = 'red';
 project.currentStyle.fillColor = 'white';
 
 var track = new Path([view.bounds.leftCenter, view.bounds.rightCenter]);
-var el = new Shape.Circle(view.center, 50);
-// var value = 0.5;
+var value = 0.5;
+var pointer;
 
-// function onMouseMove(event) {
-//   value = event.point.x / view.size.width;
-//   socket.emit('data', value);
-//   el.position.x = event.point.x;
-// }
-
-function onResize(event) {
-  track.segments = [view.bounds.leftCenter, view.bounds.rightCenter];
-  el.position.y = view.center.y;
+function onMouseDrag(event) {
+  value = event.point.y / view.size.height;
+  socket.emit('data', value);
+  track.position.y = event.point.y;
+  if (pointer) {
+    pointer.position.y = event.point.y;
+  }
 }
 
-Leap.loop(function(frame){
-  if (frame.hands.length) {
-    var val = frame.hands[0].palmPosition[1] / 400;
-    el.position.x = val * view.size.width;
-    socket.emit('data', val);
+function onResize() {
+  track.segments[1].point.x = view.size.width;
+  if (pointer) {
+    pointer.position.x = view.center.x;
   }
-});
+}
+
+
+project.importSVG('assets/pointer.svg', function (svg) {
+  pointer = svg;
+  pointer.pivot = [30, 55];
+  pointer.position.x = view.center.x;
+  pointer.position.y = view.center.y;
+})
+
+// Leap motion controller:
+
+// var leapFrame = 0;
+// var prevLeapVal = 0.5;
+// var val = 0.5;
+//
+// Leap.loop(function(frame){
+//   leapFrame++;
+//   if ((leapFrame % 2 == 0) && frame.hands.length) {
+//     val = frame.hands[0].palmPosition[1] / 400;
+//     if (prevLeapVal != val) {
+//
+//       socket.emit('data', val);
+//     }
+//     prevLeapVal = val;
+//   }
+//   el.position.x += (val * view.size.width - el.position.x) * 0.2;
+// });
