@@ -4,9 +4,7 @@ let masterHost = 'localhost';
 
 
 // Paper extensions:
-
 let ip = paper.Item.prototype;
-
 
 // Easy getters / setters for position relative to item origin
 class RelativePosition {
@@ -37,8 +35,7 @@ class RelativePosition {
   }
 
   updateItem() {
-    this._item.position.x = this._item.origin.x + this._p.x;
-    this._item.position.y = this._item.origin.y + this._p.y;
+    this._item.position = this._item.origin.add(this._p);
   }
 
   get x() {
@@ -82,12 +79,6 @@ class Animation {
     this._step = 0;
   }
 
-  step() {
-    let diff = this.to - this.from;
-    let dir = (diff < 0) ? -1 : 1;
-    this._value = this.from + (this._value + this.speed * dir - this.from);
-  }
-
   get value() {
     return this._value;
   }
@@ -95,20 +86,25 @@ class Animation {
 
 // Driver for back and forth animations
 class Yoyo extends Animation {
-  step() {
+  step(speed) {
+    if (speed)
+      this.speed = speed;
     let diff = this.to - this.from;
-    let dir = (diff < 0) ? -1 : 1;
     this._step += this.speed / 10;
     this._value = this.from + Math.sin(this._step) * diff * 0.5 + diff * 0.5;
+    return this.value;
   }
 }
 
 // Driver for loop animations
 class Loop extends Animation {
-  step() {
+  step(speed) {
+    if (speed)
+      this.speed = speed;
     let diff = this.to - this.from;
     let dir = (diff < 0) ? -1 : 1;
-    this._value = this.from + ((this._value + this.speed * dir - this.from) % diff);
+    this._value = this.from + ((this._value + this.speed * dir * 10 - this.from) % diff);
+    return this.value;
   }
 }
 
@@ -168,8 +164,6 @@ function fixSVG(svg) {
   items.forEach(function (item) {
     // Fix transformation and rotation
     item.transformContent = false;
-    // Save original position:
-    item.origin = item.position;
     // Image position fix:
     if (item.className == 'Raster') {
       item.position.x /= 2;
@@ -185,6 +179,8 @@ let layersCache = {};
 function layer(name) {
   if (!layersCache[name]) {
     layersCache[name] = paper.view.svg.getItem({name: name});
+    // Save original position:
+    layersCache[name].origin = layersCache[name].position;
   }
   return layersCache[name];
 }
