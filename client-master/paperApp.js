@@ -1,12 +1,12 @@
-
-
-project.currentStyle.strokeWidth = 5;
-project.currentStyle.strokeColor = 'red';
-project.currentStyle.fillColor = 'white';
-
-var track = new Path([view.bounds.leftCenter, view.bounds.rightCenter]);
 var value = 0.5;
 var pointer;
+
+var track = new Path([
+  view.bounds.leftCenter,
+  view.bounds.rightCenter]);
+
+track.strokeWidth = 5;
+track.strokeColor = 'red';
 
 function onMouseDrag(event) {
   value = event.point.y / view.size.height;
@@ -24,13 +24,13 @@ function onResize() {
   }
 }
 
-
 project.importSVG('assets/pointer.svg', function (svg) {
   pointer = svg;
   pointer.pivot = [30, 65];
   pointer.position.x = view.center.x;
   pointer.position.y = view.center.y;
-})
+});
+
 
 // Leap motion controller:
 
