@@ -5,6 +5,73 @@ let masterHost = 'localhost';
 
 // Paper extensions:
 
+let ip = paper.Item.prototype;
+
+
+// Easy getters / setters for position relative to item origin
+class RelativePosition {
+
+  constructor(item) {
+    this._item = item;
+    this._p = new paper.Point(this.x, this.y);
+  }
+
+  set x(value) {
+    this._p.x = value;
+    this.updateItem();
+  }
+
+  set y(value) {
+    this._p.y = value;
+    this.updateItem();
+  }
+
+  set angle(value) {
+    this._p.angle = value;
+    this.updateItem();
+  }
+
+  set length(value) {
+    this._p.length = value;
+    this.updateItem();
+  }
+
+  updateItem() {
+    this._item.position.x = this._item.origin.x + this._p.x;
+    this._item.position.y = this._item.origin.y + this._p.y;
+  }
+
+  get x() {
+    return this._item.position.x - this._item.origin.x;
+  }
+
+  get y() {
+    return this._item.position.y - this._item.origin.y;
+  }
+
+  get angle() {
+    return this._p.angle;
+  }
+
+  get length() {
+    return this._p.length;
+  }
+}
+
+Object.defineProperties(ip, {
+  relativePosition: {
+    set(point) {
+      let p = new RelativePosition(this);
+      p.x = point.x;
+      p.y = point.y;
+    },
+
+    get() {
+      return new RelativePosition(this);
+    }
+  }
+});
+
 // Base driver for animations
 class Animation {
   constructor(from = 0, to = 1, speed = 0.5) {
@@ -101,6 +168,8 @@ function fixSVG(svg) {
   items.forEach(function (item) {
     // Fix transformation and rotation
     item.transformContent = false;
+    // Save original position:
+    item.origin = item.position;
     // Image position fix:
     if (item.className == 'Raster') {
       item.position.x /= 2;
@@ -109,7 +178,6 @@ function fixSVG(svg) {
   });
 }
 
-
 // Easy access to svg children e.g. layer('dog')
 // with caching
 let layersCache = {};
@@ -117,7 +185,6 @@ let layersCache = {};
 function layer(name) {
   if (!layersCache[name]) {
     layersCache[name] = paper.view.svg.getItem({name: name});
-    layersCache[name].origin = layersCache[name].position;
   }
   return layersCache[name];
 }

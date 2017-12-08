@@ -9,7 +9,7 @@ var io = require('socket.io')(http);
 // });
 
 app.use(express.static('client-master'));
-app.use('/sample-app', express.static('sample-app'));
+app.use('/sample-apps', express.static('sample-apps'));
 
 io.on('connection', function(socket){
   console.log('a user connected');
