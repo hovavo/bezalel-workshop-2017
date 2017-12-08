@@ -27,7 +27,7 @@ function onResize() {
 
 project.importSVG('assets/pointer.svg', function (svg) {
   pointer = svg;
-  pointer.pivot = [30, 55];
+  pointer.pivot = [30, 65];
   pointer.position.x = view.center.x;
   pointer.position.y = view.center.y;
 })
