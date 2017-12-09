@@ -205,12 +205,16 @@ function layer(name) {
 // Init and bind callbacks
 function startProject() {
   // Bind vertical mouse drag to fake remote data
+  let prevDragCallback = paper.view.onMouseDrag;
   paper.view.onMouseDrag = function (event) {
     let h = paper.view.size.height;
     let y = event.point.y;
     let pad = .15; // Padding (in percent) from screen top and bottom
     let val = (y - h * pad * 2) / (h - h * pad * 2) + pad;
     remoteValue = Math.max(0, Math.min(1, val));
+    if (prevDragCallback) {
+      prevDragCallback(event);
+    }
   };
 
   // Hotkeys
