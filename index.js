@@ -4,12 +4,8 @@ var http = require('http').Server(app);
 
 var io = require('socket.io')(http);
 
-// app.get('/', function (req, res) {
-//   res.send('hello world')
-// });
-
 app.use(express.static('client-master'));
-app.use('/sample-apps', express.static('sample-apps'));
+app.use('/workshop', express.static('client-class/workshop'));
 
 io.on('connection', function(socket){
   console.log('a user connected');

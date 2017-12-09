@@ -14,8 +14,8 @@ project.svgReady = function () {
         layer('ribua').rotation = input.mapBetween(0, 45);
         layer('ribua2').rotation = input.mapBetween(45, 0);
         
-        layer('ribua3').opacity = input.mapBetweenPositive(0, 1);
-        layer('ribua4').opacity = input.mapBetweenPositive(1, 0);
+        layer('ribua3').opacity = input.mapBetween(0, 1);
+        layer('ribua4').opacity = input.mapBetween(1, 0);
         
         layer('poly').strokeColor.hue = input.mapBetween(0, 360);
         layer('poly2').fillColor.hue = input.mapBetween(360, 0);
@@ -24,10 +24,5 @@ project.svgReady = function () {
         layer('igul4').visible = input.isBetween(0.4, 1);
         layer('igul5').visible = input.isBetween(0.6, 1);
         layer('igul6').visible = input.isBetween(0.8, 1);
-        layer('igul7').visible = input.isBetween(0, 1);
-        layer('igul8').visible = input.isBetween(0.8, 1);
-        layer('igul9').visible = input.isBetween(0.6, 1);
-        layer('igul10').visible = input.isBetween(0.4, 1);
-        layer('igul11').visible = input.isBetween(0.2, 1);
     }
 }
