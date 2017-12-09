@@ -21,7 +21,7 @@ project.svgReady = function () {
         anim2.step();
         layer('cat2').rotation = anim2.value;
         
-        anim3.speed = input.mapBetween(0.2, 1);
+        anim3.speed = input.mapBetween(0.2, 2);
         anim3.step();
         layer('cat3').relativePosition.y = anim3.value;
         

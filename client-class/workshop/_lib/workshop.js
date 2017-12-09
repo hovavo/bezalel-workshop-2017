@@ -163,12 +163,16 @@ function randomNumber(to = 1, from = 0) {
 
 
 // Improved SVG loading 
-function loadSVG(path) {
+function loadSVG() {
   paper.project.importSVG(paper.project.svgName, function (svg) {
+    svg.opacity = 0;
     fixSVG(svg);
     paper.view.svg = svg;
     if (paper.project.svgReady)
-      setTimeout(paper.project.svgReady, 200);
+      setTimeout(function () {
+        svg.opacity = 1;
+        paper.project.svgReady();
+      }, 200);
   });
 }
 
