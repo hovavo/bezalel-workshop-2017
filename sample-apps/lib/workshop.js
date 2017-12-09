@@ -66,6 +66,15 @@ Object.defineProperties(ip, {
     get() {
       return new RelativePosition(this);
     }
+  },
+    relativeRotation: {
+    set(value) {
+      this.rotation = this.originalRotation + value;
+    },
+
+    get() {
+      return this.rotation - this.originalRotation;
+    }
   }
 });
 
@@ -179,8 +188,9 @@ let layersCache = {};
 function layer(name) {
   if (!layersCache[name]) {
     layersCache[name] = paper.view.svg.getItem({name: name});
-    // Save original position:
+    // Save original properties:
     layersCache[name].origin = layersCache[name].position;
+    layersCache[name].originalRotation = layersCache[name].rotation;
   }
   return layersCache[name];
 }
