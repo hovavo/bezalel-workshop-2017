@@ -117,20 +117,33 @@ class Loop extends Animation {
   }
 }
 
+// Driver for Either animations
+class Either extends Animation {
+  step(speed) {
+    if (speed)
+      this.speed = speed;
+    this._step += this.speed / 10;
+    if (this.speed > 0.01)
+      this._value = (this._step % 1) < 0.5 ? this.from : this.to;
+    else
+      this._value = this.to;
+    return this.value;
+  }
+}
 
 // Expose data and data utilities:
-let data = {
+let input = {
   value: 0.5,
   mapBetween(from, to) {
     return between(from, to, this.value);
   },
-  isBetween(a, b) {
+  mapBetweenPositive(from, to) {
+    return Math.abs(between(from, to, this.value));
+  },
+  isBetween(a, b, value = this.value) {
     let low = Math.min(a, b);
     let high = Math.max(a, b);
     return (this.value >= low && this.value < high);
-  },
-  isntBetween(a, b) {
-    return !this.isBetween(1, b);
   }
 };
 
@@ -144,15 +157,8 @@ function between(from, to, step) {
 
 
 // Easy random fuctions:
-function randomNumber(max) {
-  return Math.random() * max;
-}
-
-function randomPoint(max) {
-  return new paper.Point({
-    x: randomNumber(max),
-    y: randomNumber(max)
-  });
+function randomNumber(to = 1, from = 0) {
+  return Math.random() * (to - from) + from;
 }
 
 
@@ -218,7 +224,7 @@ function startProject() {
   // Smooth data
   let g = new paper.Group();
   g.onFrame = function (event) {
-    data.value += (remoteValue - data.value) * 0.2;
+    input.value += (remoteValue - input.value) * 0.2;
   }
 }
 

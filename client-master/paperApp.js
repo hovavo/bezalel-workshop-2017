@@ -10,7 +10,7 @@ track.strokeColor = 'red';
 
 function onMouseDrag(event) {
   value = event.point.y / view.size.height;
-  socket.emit('data', value);
+  socket.emit('data', value * 2 - 1);
   track.position.y = event.point.y;
   if (pointer) {
     pointer.position.y = event.point.y;
