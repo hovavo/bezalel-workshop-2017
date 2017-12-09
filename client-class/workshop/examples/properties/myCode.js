@@ -1,8 +1,8 @@
-
 project.svgName = 'design.svg';
-
 project.svgReady = function () {
 
+    // A list of properties available for manipulation:
+    
     // Show / hide. 
     // Either true (show) or false (hide)
     layer('ribua1').visible = true;
