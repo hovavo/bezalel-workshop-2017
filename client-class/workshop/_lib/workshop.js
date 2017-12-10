@@ -67,7 +67,7 @@ Object.defineProperties(ip, {
       return new RelativePosition(this);
     }
   },
-    relativeRotation: {
+  relativeRotation: {
     set(value) {
       this.rotation = this.originalRotation + value;
     },
@@ -127,6 +127,22 @@ class Either extends Animation {
       this._value = (this._step % 1) < 0.5 ? this.from : this.to;
     else
       this._value = this.to;
+    return this.value;
+  }
+}
+
+// Driver for Either animations
+class Random extends Animation {
+  step(speed) {
+    if (speed)
+      this.speed = speed;
+    this._step += this.speed / 10;
+    if (this._step > 0.5) {
+      let low = Math.min(this.to, this.from);
+      let high = Math.max(this.to, this.from);
+      this._value = randomNumber(high, low);
+      this._step = 0;
+    }
     return this.value;
   }
 }
