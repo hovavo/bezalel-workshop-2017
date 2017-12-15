@@ -24,7 +24,7 @@ project.svgReady = function () {
     var anim4 = new Either(0, 1);
     
     // We can change the speed of the animation (default is 0.5)
-    anim3.speed = 2;
+    anim3.speed = 3;
     
     // We can change the range of numbers for the animations
     anim2.from = -90;

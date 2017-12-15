@@ -8,9 +8,9 @@ var track = new Path([
 track.strokeWidth = 5;
 track.strokeColor = 'red';
 
-function onMouseDrag(event) {
+function onMouseMove(event) {
   value = event.point.y / view.size.height;
-  socket.emit('data', value * 2 - 1);
+  socket.emit('data', Math.max(0, Math.min(value, 1)));
   track.position.y = event.point.y;
   if (pointer) {
     pointer.position.y = event.point.y;

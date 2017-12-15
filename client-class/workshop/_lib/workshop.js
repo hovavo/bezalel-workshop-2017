@@ -1,6 +1,6 @@
 // Settings:
 let connect = true;
-let masterHost = 'localhost';
+let masterHost = '10.0.0.2';
 
 
 // Paper extensions:

@@ -48,7 +48,7 @@ project.svgReady = function () {
     layer('ribua1').relativePosition.y = -10;
     // Or angle (0 to 360 degrees) and distace (in pixels).
     layer('ribua1').relativePosition.angle = 10;
-    layer('ribua1').relativePosition.y = -10;
+    layer('ribua1').relativePosition.length = -10;
     
     // Rotation.
     // Degrees - from 0 to 360.
