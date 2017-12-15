@@ -1,7 +1,9 @@
 // Settings:
-let connect = true;
+let connect = false;
 let masterHost = '10.0.0.2';
 
+let playback = true;
+let capture = true;
 
 // Paper extensions:
 let ip = paper.Item.prototype;
@@ -178,7 +180,7 @@ function randomNumber(to = 1, from = 0) {
 }
 
 
-// Improved SVG loading 
+// Improved SVG loading
 function loadSVG() {
   paper.project.importSVG(paper.project.svgName, function (svg) {
     svg.opacity = 0;
@@ -188,6 +190,12 @@ function loadSVG() {
       setTimeout(function () {
         svg.opacity = 1;
         paper.project.svgReady();
+        if (playback) {
+          playbackStatus = 'playing';
+        }
+        if (capture) {
+          capturer.start();
+        }
       }, 200);
   });
 }
@@ -225,17 +233,20 @@ function layer(name) {
 // Init and bind callbacks
 function startProject() {
   // Bind vertical mouse drag to fake remote data
-  let prevDragCallback = paper.view.onMouseDrag;
-  paper.view.onMouseDrag = function (event) {
-    let h = paper.view.size.height;
-    let y = event.point.y;
-    let pad = .15; // Padding (in percent) from screen top and bottom
-    let val = (y - h * pad * 2) / (h - h * pad * 2) + pad;
-    remoteValue = Math.max(0, Math.min(1, val));
-    if (prevDragCallback) {
-      prevDragCallback(event);
-    }
-  };
+  if (!playback) {
+    let prevDragCallback = paper.view.onMouseDrag;
+    paper.view.onMouseDrag = function (event) {
+      let h = paper.view.size.height;
+      let y = event.point.y;
+      let pad = .15; // Padding (in percent) from screen top and bottom
+      let val = (y - h * pad * 2) / (h - h * pad * 2) + pad;
+      remoteValue = Math.max(0, Math.min(1, val));
+      if (prevDragCallback) {
+        prevDragCallback(event);
+      }
+    };
+  }
+
 
   // Hotkeys
   paper.view.onKeyUp = function (event) {
@@ -248,14 +259,57 @@ function startProject() {
   // Smooth data
   let g = new paper.Group();
   g.onFrame = function (event) {
+    if (playback && playbackStatus == 'playing' && event.count > 60 && (event.count % 2 == 0)) {
+      remoteValue = playbackData[playbackFrame];
+      if (capture) capturer.capture(canvas);
+      if (playbackFrame < playbackData.length)
+        playbackFrame++;
+      else {
+        playbackStatus = 'ended';
+        if (capture) {
+          capturer.stop();
+          capturer.save();
+        }
+      }
+    }
     input.value += (remoteValue - input.value) * 0.2;
   }
 }
 
 
 // Bootstraping
+let playbackData;
+let playbackStatus = 'pre';
+let playbackFrame = 0;
+
+var canvas;
+var capturer;
+
+if (capture) {
+  capturer = new CCapture({
+    format: 'ffmpegserver',
+    framerate: 60,
+    verbose: true,
+    name: "cap",
+    extension: ".mp4",
+    codec: "mpeg4"
+  });
+}
+
 window.onload = function () {
-  if (paper.project.svgName) {
+  if (capture) canvas = document.querySelector('#myCanvas');
+  if (playback) {
+    input.value = 1;
+    fetch('../../_lib/recording.json').then(function (response) {
+      return response.json();
+    }).then(function (j) {
+      playbackData = j;
+      if (paper.project.svgName) {
+        loadSVG(paper.project.svgName);
+      }
+    });
+  }
+  else if (paper.project.svgName) {
     loadSVG(paper.project.svgName);
   }
   startProject();
