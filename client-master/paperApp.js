@@ -1,5 +1,6 @@
 var value = 0.5;
 var pointer;
+var log;
 
 var track = new Path([
   view.bounds.leftCenter,
@@ -9,11 +10,18 @@ track.strokeWidth = 5;
 track.strokeColor = 'red';
 
 function onMouseMove(event) {
-  value = event.point.y / view.size.height;
-  socket.emit('data', Math.max(0, Math.min(value, 1)));
-  track.position.y = event.point.y;
+  var h = paper.view.size.height;
+  var pad = .10; // Padding (in percent) from screen top and bottom
+  var padPx = h * pad;
+  var diff = padPx * 2;
+  var netH = h - diff;
+  var y = event.point.y;
+  value = (y - diff) / netH + pad;
+  value = Math.max(0, Math.min(value, 1));
+  // socket.emit('data', value);
+  track.position.y = value * netH + padPx;
   if (pointer) {
-    pointer.position.y = event.point.y;
+    pointer.position.y = value * netH + padPx;
   }
 }
 
@@ -21,6 +29,20 @@ function onResize() {
   track.segments[1].point.x = view.size.width;
   if (pointer) {
     pointer.position.x = view.center.x;
+  }
+}
+
+function onFrame(event) {
+  if (log && event.count % 2 == 0)
+    log.push(value);
+}
+
+function onMouseDown(event) {
+  if (log) {
+    console.log(JSON.stringify(log));
+  }
+  else {
+    log = [];
   }
 }
 
