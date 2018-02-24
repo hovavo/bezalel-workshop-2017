@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    html,
+    body {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    canvas[resize] {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="http://localhost:8080/ffmpegserver/CCapture.js"></script>
+  <script src="http://localhost:8080/ffmpegserver/ffmpegserver.js"></script>
+  <script src="../../_lib/socket.io.js"></script>
+  <script src="../../_lib/paper-full.js"></script>
+  <script src="../../_lib/workshop.js"></script>
+  <script type="text/paperscript" src="myCode.js" canvas="myCanvas"></script>
+
+</head>
+<body>
+<canvas id="myCanvas" width="1440" height="900"></canvas>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  	 viewBox="0 0 1280 800" style="enable-background:new 0 0 1280 800;" xml:space="preserve">
+</body>
+</html>

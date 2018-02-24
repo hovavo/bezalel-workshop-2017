@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1440px"
+	 height="900px" viewBox="0 0 1440 900" style="enable-background:new 0 0 1440 900;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:none;stroke:#FF0000;stroke-width:5;stroke-miterlimit:10;}
+	.st2{fill:#FF0000;}
+	.st3{fill:#FC0000;}
+</style>
+<g id="Layer_3">
+	<rect class="st0" width="1440" height="900"/>
+</g>
+<g id="line">
+	<line class="st1" x1="0" y1="470" x2="1440" y2="470"/>
+</g>
+<g id="hand" xmlns:svg="http://www.w3.org/2000/svg">
+	<g>
+		<polygon id="fill" class="st0" points="735,412.3 730,412.3 730,407.5 710,407.5 710,412.3 705,412.3 705,432.5 710,432.5 
+			710,438.7 730,438.7 730,432.5 735,432.5 		"/>
+		<g id="circle">
+			<rect x="700" y="412.5" class="st2" width="5" height="20"/>
+			<rect x="735" y="412.5" class="st2" width="5" height="20"/>
+			<rect x="705" y="432.5" class="st2" width="5" height="5"/>
+			<rect x="730" y="432.5" class="st2" width="5" height="5"/>
+			<rect x="705" y="407.5" class="st2" width="5" height="5"/>
+			<rect x="730" y="407.5" class="st2" width="5" height="5"/>
+			<rect x="710" y="402.5" class="st2" width="20" height="5"/>
+			<rect x="710" y="437.5" class="st2" width="20" height="5"/>
+		</g>
+		<g id="hand_1_">
+			<polygon class="st3" points="689.5,452.5 694.5,452.5 694.5,447.5 704.5,447.5 704.5,452.5 709.5,452.5 709.5,422.5 714.5,422.5 
+				714.5,417.5 724.5,417.5 724.5,422.5 729.5,422.5 729.5,437.5 749.5,437.5 749.5,442.5 759.5,442.5 759.5,447.5 764.5,447.5 
+				764.5,472.5 759.5,472.5 759.5,482.5 754.5,482.5 754.5,497.5 744.5,497.5 744.5,492.5 739.5,492.5 739.5,497.5 714.5,497.5 
+				714.5,487.5 709.5,487.5 709.5,482.5 704.5,482.5 704.5,477.5 699.5,477.5 699.5,467.5 694.5,467.5 694.5,462.5 689.5,462.5 			
+				"/>
+			<polygon class="st0" points="694.5,452.5 704.5,452.5 704.5,457.5 709.5,457.5 709.5,462.5 714.5,462.5 714.5,422.5 724.5,422.5 
+				724.5,452.5 729.5,452.5 729.5,442.5 739.5,442.5 739.5,452.5 744.5,452.5 744.5,442.5 749.5,442.5 749.5,452.5 754.5,452.5 
+				754.5,447.5 759.5,447.5 759.5,472.5 754.5,472.5 754.5,482.5 749.5,482.5 749.5,492.5 744.5,492.5 744.5,487.5 739.5,487.5 
+				739.5,492.5 719.5,492.5 719.5,487.5 714.5,487.5 714.5,482.5 709.5,482.5 709.5,477.5 704.5,477.5 704.5,467.5 699.5,467.5 
+				699.5,462.5 694.5,462.5 			"/>
+			<rect x="724.5" y="462.5" class="st3" width="5" height="20"/>
+			<rect x="734.5" y="462.5" class="st3" width="5" height="20"/>
+			<rect x="744.5" y="462.5" class="st3" width="5" height="20"/>
+		</g>
+		<g id="arrow">
+			<rect x="717.5" y="357.5" class="st2" width="5" height="25"/>
+			<rect x="722.5" y="362.5" class="st2" width="5" height="5"/>
+			<rect x="712.5" y="362.5" class="st2" width="5" height="5"/>
+			<rect x="727.5" y="367.5" class="st2" width="5" height="5"/>
+			<rect x="707.5" y="367.5" class="st2" width="5" height="5"/>
+		</g>
+		<g id="arrow_1_">
+			<rect x="717.5" y="517.5" class="st2" width="5" height="25"/>
+			<rect x="712.5" y="532.5" class="st2" width="5" height="5"/>
+			<rect x="722.5" y="532.5" class="st2" width="5" height="5"/>
+			<rect x="707.5" y="527.5" class="st2" width="5" height="5"/>
+			<rect x="727.5" y="527.5" class="st2" width="5" height="5"/>
+		</g>
+	</g>
+</g>
+</svg>

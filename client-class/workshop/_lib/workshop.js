@@ -307,6 +307,14 @@ window.onload = function () {
       if (paper.project.svgName) {
         loadSVG(paper.project.svgName);
       }
+      else {
+        if (playback) {
+          playbackStatus = 'playing';
+        }
+        if (capture) {
+          capturer.start();
+        }
+      }
     });
   }
   else if (paper.project.svgName) {
