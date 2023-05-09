@@ -2,8 +2,8 @@
 let connect = false;
 let masterHost = '10.0.0.2';
 
-let playback = true;
-let capture = true;
+let playback = false;
+let capture = false;
 
 // Paper extensions:
 let ip = paper.Item.prototype;
